@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.board {
+    display: grid;
+    grid-template-rows: repeat(3, 100px);
+}
+
+.left {
+    border-right: solid 1px black;
+}
+
+.right {
+    border-left: solid 1px black;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+}
+
+.row:not(:last-child) {
+    border-bottom: solid 1px black;
+}
