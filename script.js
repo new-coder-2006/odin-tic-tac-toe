@@ -78,14 +78,36 @@ const checkForWin = function(board) {
         return "none"; // Can return none here b/c no one has tic tac toe
     }
 }
+
 const checkAvailableMoves = function(board) {
     return board["0"].includes("_") || 
            board["1"].includes("_") || 
            board["2"].includes["_"];
 }
 
+const restartGame = function() {
+    const rows = document.querySelectorAll(".row");
+
+    rows.forEach(row => {
+        Array.from(row.childNodes).forEach(child => {
+            if (child.nodeType === Node.ELEMENT_NODE) {
+                child.textContent = '';
+            }
+        });
+    });
+
+    let board = {
+        0: ["_", "_", "_"],
+        1: ["_", "_", "_"],
+        2: ["_", "_", "_"]
+    }
+
+    return board;
+}
+
 function createPlayer(name, symbol) {
     const playMove = (board, row, col) => {
+        console.log(board);
         console.assert(row >= 0 && row < 3 && col >= 0 && col < 3);
         
         if (board[row][col] !== "_") {
@@ -138,15 +160,27 @@ function game() {
                                                       squareNumber[7]);
 
             if (moveResult !== "none" && moveResult !== "invalid") {
-                setWinner(moveResult);
-            } else {
+                if (moveResult === "x") {
+                    setWinner(xName);
+                } else {
+                    setWinner(oName);
+                }
+            } else if (moveResult !== "invalid") {
                 if (currentPlayer === x) {
                     currentPlayer = o;
                 } else {
                     currentPlayer = x;
                 }
+            } else {
+                // Do nothing because user clicked on a space that is already filled
             }
         });
+    });
+
+    const restart = document.querySelector(".restart");
+
+    restart.addEventListener("click", () => {
+        board = restartGame();
     });
 }
 
